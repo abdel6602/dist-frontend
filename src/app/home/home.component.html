@@ -1,0 +1,28 @@
+<div class="upload-section">
+  <h2>Drag and Drop Image or Select from File Explorer</h2>
+  
+  <div *ngIf="!imageSrc" class="dropzone" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+    <p>Drop your image here</p>
+    <input type="file" (change)="onFileSelected($event)">
+  </div>
+
+  <div *ngIf="imageSrc" class="image-preview">
+    <img [src]="imageSrc" alt="Preview">
+  </div>
+</div>
+
+<div class="form-section">
+  <label for="dropdown">Select Options:</label>
+  <select id="dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange($event)">
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+
+  <div *ngFor="let field of currentfields">
+    <input [placeholder]="field.placeholder" [(ngModel)]="fieldValues[field.placeholder]" type="text">
+  </div>
+
+  <button *ngIf="showSubmitButton" (click)="submit()">{{ buttonText }}</button>
+  <button *ngIf="!showSubmitButton && downloadID" (click)="download()">Download</button>
+</div>
